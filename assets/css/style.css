@@ -4,6 +4,12 @@ body {
   line-height: 1;
 }
 
+/* added for other styling */
+.current-date {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
 textarea {
   background: transparent;
   border: none;
@@ -31,7 +37,7 @@ textarea {
   white-space: pre-wrap;
 }
 
-/*! removed border-radius */
+/* removed border-radius */
 .time-block {
   text-align: center;
 }
@@ -42,7 +48,7 @@ textarea {
   border-top: 1px solid white;
 }
 
-/*! removed border-top */
+/* removed border-top */
 .hour {
   background-color: #ffffff;
   color: #000000;
@@ -69,11 +75,13 @@ textarea {
   border-bottom: 2px solid #d3d3d3;
 }
 
+/* added for other styling */
 .present-border {
   border-top: 2px solid #ff6961;
   border-bottom: 2px solid #ff6961;
 }
 
+/* added for other styling */
 .future-border {
   border-top: 2px solid #77dd77;
   border-bottom: 2px solid #77dd77;

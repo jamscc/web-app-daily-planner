@@ -3,6 +3,16 @@
 var hoursBlockTwelve = [];
 var hoursBlockTwentyFour = [];
 
+// to keep track of the data index numbers of clicked save buttons
+// to keep track of the corresponding saved events
+var storedIndexNumber = [];
+var storedSavedEvent = [];
+
+// stored data index numbers of clicked save buttons
+// stored saved events
+var getStoredIndexNumber;
+var getStoredEvent;
+
 // display calendar
 function displayCalendar() {
 
@@ -85,9 +95,48 @@ function displayCalendar() {
         saveEventButton.attr("class", "saveBtn save-btn-size").click(saveEvents);
         divSaveButton.append(saveEventButton);
     }
+
+    // to display the current date
+    // added class attribute for other styling
+    $("#currentDay").text(moment().format('dddd, MMMM DD, YYYY')).addClass("current-date")
+
+    // get from local storage and display the saved events
+    getStoredIndexNumber = JSON.parse(localStorage.getItem("storedIndexNumber"));
+    getStoredEvent = JSON.parse(localStorage.getItem("storedSavedEvent"));
+
+    if (getStoredIndexNumber == null && getStoredEvent == null) {
+        return;
+    } else {
+        // use of data index numbers
+        for (var i = 0; i < getStoredIndexNumber.length; i++) {
+            $("textarea[data-index=" + getStoredIndexNumber[i] + "]").append(getStoredEvent[i]);
+        };
+        storedIndexNumber = getStoredIndexNumber;
+        storedSavedEvent = getStoredEvent;
+    }
 }
 
-function saveEvents() {}
+function saveEvents() {
+    var eventLogged = $("textarea[data-index=" + $(this).data("index") + "]");
+    // checking stored saved events
+    // find the position of the existing event and replace it with the new event, if applicable
+    switch (true) {
+        case (storedIndexNumber.includes($(this).data("index"))):
+            var indexArrayClicked = storedIndexNumber.indexOf($(this).data("index"));
+            storedSavedEvent[indexArrayClicked] = eventLogged.val();
+            break;
+        default:
+            // if there is no existing event, push to the arrays
+            storedIndexNumber.push($(this).data("index"));
+            storedSavedEvent.push(eventLogged.val());
+    };
+
+    // local storage 
+    // data index numbers of the clicked save buttons 
+    // corresponding saved events 
+    localStorage.setItem("storedIndexNumber", JSON.stringify(storedIndexNumber));
+    localStorage.setItem("storedSavedEvent", JSON.stringify(storedSavedEvent));
+}
 
 // display calendar
 displayCalendar();
